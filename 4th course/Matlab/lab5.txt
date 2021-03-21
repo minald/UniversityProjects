@@ -1,0 +1,90 @@
+clear; 
+load carsmall; 
+vars = {'MPG' 'Cylinders' 'Horsepower' 'Model_Year'}; 
+x = [MPG Cylinders Horsepower Model_Year]; 
+y = cellstr(Model); 
+t = fitctree(x, y, 'PredictorNames', vars, 'CategoricalPredictors', {'Cylinders', 'Model_Year'}, 'Prune', 'off'); 
+view(t, 'Mode', 'graph'); 
+
+answer=strings(43,2); 
+iter = 1; 
+for i=1:43 
+	if t.Children(i, 1) == 0 
+		answer(iter, 2) = t.NodeClass(i); 
+		p=t.Parent(i); 
+		oldP=i; 
+		while p ~= 0 
+			if t.CutType(p) == "categorical" 
+				sign = " in ("; 
+			elseif mod(oldP, 2) == 1 
+				sign = ">="; 
+			else 
+				sign = "<"; 
+			end 
+
+			if t.CutType(p) == "categorical" 
+				if mod(oldP, 2) == 0 
+					pred = strcat(num2str(t.CutCategories{p, 1}), ")"); 
+				else 
+					pred = strcat(num2str(t.CutCategories{p, 2}), ")"); 
+				end 
+			else 
+				pred = num2str(t.CutPoint(p)); 
+			end 
+			str = strcat(cell2mat(t.CutPredictor(p)), sign, pred); 
+			answer(iter, 1) = strcat(answer(iter, 1), " and ", str); 
+			oldP=p; 
+			p=t.Parent(p); 
+		end 
+		answer(iter, 1) = extractAfter(answer(iter, 1), 4); 
+		iter = iter + 1 ; 
+	end 
+end 
+
+matrix=zeros(numel(t.Parent),numel(t.Parent)-1); 
+for z=1:numel(t.Parent)-1 
+	matrix(z+1,z)=1; 
+	matrix(t.Parent(z+1,1),z)=-1; 
+end 
+matrix 
+i = 1; 
+
+while t.Children(i, 1) ~= 0 
+	if t.CutType(i) == "categorical" 
+        value = questdlg([cell2mat(t.CutPredictor(i)) '==' num2str(t.CutCategories{i, 1})], 'Enter: ');
+		if strcmp(value,'Yes') 
+			son = 1;
+        elseif strcmp(value,'No')
+                son = 2; 
+        else
+            break
+		end 
+    else 
+        value = questdlg([cell2mat(t.CutPredictor(i)) '>=' num2str(t.CutPoint(i))], 'Enter: ');
+		if strcmp(value,'Yes')
+			son = 2; 
+        elseif strcmp(value,'No')
+                son = 1; 
+        else
+            break
+		end 
+	end 
+    son1=0;
+    son2=0;
+    for j=1:numel(t.Parent)-1
+        if(matrix(i,j)==-1)
+            if(son1==0)
+                son1=matrix(:,j);
+            else
+                son2=matrix(:,j);
+            end        
+        end
+    end
+    if(son==1)
+        i=find(son1==1);
+    else
+        i=find(son2==1);
+    end
+end
+
+msgbox(t.NodeClass(i))

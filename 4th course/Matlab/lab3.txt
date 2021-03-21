@@ -1,0 +1,28 @@
+clear; 
+load carsmall; 
+vars = {'MPG' 'Cylinders' 'Horsepower' 'Model_Year'}; 
+x = [MPG Cylinders Horsepower Model_Year]; 
+y = cellstr(Origin); 
+t = fitctree(x, y, 'PredictorNames', vars, 'CategoricalPredictors', {'Cylinders', 'Model_Year'}, 'Prune', 'off'); 
+view(t, 'Mode', 'graph'); 
+
+i = 1; 
+while t.Children(i, 1) ~= 0 
+	value = inputdlg('Enter: ', num2str(i), 1); 
+	if t.CutType(i) == "categorical" 
+		if t.CutCategories{i, 1} == value{1} 
+			son = 1; 
+		else 
+			son = 2; 
+		end 
+	else 
+		if t.CutPoint(i) < value 
+			son = 1; 
+		else 
+			son = 2; 
+		end 
+	end 
+	i = t.Children(i, son); 
+end 
+
+t.NodeClass(i)

@@ -1,0 +1,54 @@
+clear; 
+load carsmall; 
+vars = {'MPG' 'Cylinders' 'Horsepower' 'Model_Year'}; 
+x = [MPG Cylinders Horsepower Model_Year]; 
+y = cellstr(Model); 
+t = fitctree(x, y, 'PredictorNames', vars, 'CategoricalPredictors', {'Cylinders', 'Model_Year'}, 'Prune', 'off'); 
+view(t, 'Mode', 'graph'); 
+matrix=zeros(numel(t.Parent),numel(t.Parent)-1);
+for z=1:numel(t.Parent)-1
+    matrix(z+1,z)=1;
+    matrix(t.Parent(z+1,1),z)=-1;
+end
+matrix
+i = 1; 
+
+while t.Children(i, 1) ~= 0 
+	if t.CutType(i) == "categorical" 
+        value = questdlg([cell2mat(t.CutPredictor(i)) '==' num2str(t.CutCategories{i, 1})], 'Enter: ');
+		if strcmp(value,'Yes') 
+			son = 1;
+        elseif strcmp(value,'No')
+                son = 2; 
+        else
+            break
+		end 
+    else 
+        value = questdlg([cell2mat(t.CutPredictor(i)) '>=' num2str(t.CutPoint(i))], 'Enter: ');
+		if strcmp(value,'Yes')
+			son = 2; 
+        elseif strcmp(value,'No')
+                son = 1; 
+        else
+            break
+		end 
+	end 
+    son1=0;
+    son2=0;
+    for j=1:numel(t.Parent)-1
+        if(matrix(i,j)==-1)
+            if(son1==0)
+                son1=matrix(:,j);
+            else
+                son2=matrix(:,j);
+            end        
+        end
+    end
+    if(son==1)
+        i=find(son1==1);
+    else
+        i=find(son2==1);
+    end
+end
+
+msgbox(t.NodeClass(i))

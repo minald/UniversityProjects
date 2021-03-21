@@ -1,0 +1,35 @@
+﻿<Window x:Class="lab2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:lab2"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="300" Width="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" Grid.ColumnSpan="2">
+            <MenuItem Name="OpenFile" Header="Open file" Click="OpenFile_Click"></MenuItem>
+        </Menu>
+        <TextBlock Name="FileNameTB" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" TextAlignment="Center"/>
+        <Button Grid.Row="2" Grid.Column="0" Name="GenerateRSA" Click="GenerateRSA_Click" Margin="15">Generate RSA</Button>
+        <Button Grid.Row="2" Grid.Column="1" Name="GenerateSessionKey" 
+                Click="GenerateSessionKey_Click" Margin="15">Generate session key</Button>
+        <Button Grid.Row="3" Grid.Column="0" Name="DecryptSessionKey" 
+                Click="DecryptSessionKey_Click" Margin="15">Decrypt session key</Button>
+        <Button Grid.Row="3" Grid.Column="1" Name="SendEncryptedSessionKeyToClient" 
+                Click="SendEncryptedSessionKeyToClient_Click" Margin="15">Send encrypted session key</Button>
+        <Button Grid.Row="4" Grid.Column="0" Name="Decode" Click="Decode_Click" Margin="15">Decode</Button>
+        <Button Grid.Row="4" Grid.Column="1" Name="Encode" Click="Encode_Click" Margin="15">Encode</Button>
+    </Grid>
+</Window>

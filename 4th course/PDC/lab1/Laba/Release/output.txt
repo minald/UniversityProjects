@@ -1,0 +1,2 @@
+m=1000 n=1000 k=1000 blockSize=100 threads=4 duration=0.738
+m=2000 n=2000 k=2000 blockSize=1000 threads=8 duration=12.885

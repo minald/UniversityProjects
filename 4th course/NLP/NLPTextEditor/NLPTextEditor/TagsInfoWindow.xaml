@@ -1,0 +1,35 @@
+﻿<Window x:Class="NLPTextEditor.TagsInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" Title="Tags info" Height="600" Width="375">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <ListView Name="TagsListView" Grid.Row="0" Grid.ColumnSpan="3" MouseDoubleClick="TagsListView_MouseDoubleClick"
+                  ItemsSource="{Binding Path=Tags, Mode=TwoWay}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="60" DisplayMemberBinding="{Binding Name}">
+                        <GridViewColumnHeader Click="TableHeader_Click" Content="Name"/>
+                    </GridViewColumn>
+                    <GridViewColumn Width="60" DisplayMemberBinding="{Binding Amount}">
+                        <GridViewColumnHeader Click="TableHeader_Click" Content="Amount"/>
+                    </GridViewColumn>
+                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Description}">
+                        <GridViewColumnHeader Click="TableHeader_Click" Content="Description"/>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Grid.Row="1" Grid.Column="0" Margin="5" Name="AddTag" Click="AddTag_Click">Add</Button>
+        <Button Grid.Row="1" Grid.Column="1" Margin="5" Name="RemoveTag" Click="RemoveTag_Click">Remove</Button>
+    </Grid>
+</Window>

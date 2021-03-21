@@ -1,0 +1,35 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="NLPTextEditor.TaggedEditorWindow"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+        Name="Window" Title="{Binding ActiveFileName}"
+        Height="600" Width="800" ResizeMode="CanResizeWithGrip">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="22" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" VerticalAlignment="Top">
+            <MenuItem Name="OpenFile" Header="Open file" Click="OpenFile_Click"/>
+            <MenuItem Name="SaveFile" Header="Save" Click="SaveFile_Click"/>
+            <MenuItem Name="SaveAsFile" Header="Save As" Click="SaveAsFile_Click"/>
+            <Separator/>
+            <MenuItem Command="Undo" Header="Undo"/>
+            <MenuItem Command="Redo" Header="Redo"/>
+            <Separator/>
+            <MenuItem Name="SetTagsAutomatically" Header="Set tags automatically" Click="SetTagsAutomatically_Click"/>
+        </Menu>
+        <RichTextBox Name="DocumentText" Grid.Row="1" VerticalScrollBarVisibility="Auto" 
+                     HorizontalScrollBarVisibility="Disabled" AcceptsReturn="True" AcceptsTab="True">
+            <RichTextBox.ContextMenu>
+                <ContextMenu Name="DocumentTextContextMenu" Opened="EditContextMenu_OnOpened">
+                    <MenuItem Name="EditingWordMenu" />
+                </ContextMenu>
+            </RichTextBox.ContextMenu>
+        </RichTextBox>
+    </Grid>
+</Window>

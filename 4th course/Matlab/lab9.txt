@@ -1,0 +1,45 @@
+clear; 
+binarya = randi([0 1],8,6); 
+a = bi2de(binarya) / 10 - 3.2; 
+b = zeros([1 8]); 
+for i=1:8 
+	b(i) = 1 - 2 * a(i) - a(i)^2; 
+end 
+
+while max(b) - min(b) > 0.01 
+	for i=1:8 
+		b(i) = 1 - 2 * a(i) - a(i)^2; 
+	end 
+	[sortval, sortindex] = sort(b); 
+	a1 = binarya(sortindex(8), 1:2); 
+	b1 = binarya(sortindex(8), 3:4); 
+	c1 = binarya(sortindex(8), 5:6); 
+	a2 = binarya(sortindex(7), 1:2); 
+	b2 = binarya(sortindex(7), 3:4); 
+	c2 = binarya(sortindex(7), 5:6); 
+	a3 = binarya(sortindex(6), 1:2); 
+	b3 = binarya(sortindex(6), 3:4); 
+	c3 = binarya(sortindex(6), 5:6); 
+	a4 = binarya(sortindex(5), 1:2); 
+	b4 = binarya(sortindex(5), 3:4); 
+	c4 = binarya(sortindex(5), 5:6); 
+	binarya(1,:)=[a1 b1 c2]; 
+	binarya(2,:)=[a1 b2 c1]; 
+	binarya(3,:)=[a1 b3 c3]; 
+	binarya(4,:)=[a2 b1 c1]; 
+	binarya(5,:)=[a2 b3 c3]; 
+	binarya(6,:)=[a3 b1 c1]; 
+	binarya(7,:)=[a3 b4 c2]; 
+	binarya(8,:)=[a4 b2 c4]; 
+
+	x = randi([1,8]); 
+	y = randi([1,6]); 
+	p = rand(); 
+
+	if p < 0.5 
+		binarya(x, y) = 1 - binarya(x, y); 
+	end 
+
+	a = bi2de(binarya) / 10 - 3.2; 
+	disp(a); 
+end

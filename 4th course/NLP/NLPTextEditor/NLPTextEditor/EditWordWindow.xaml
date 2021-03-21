@@ -1,0 +1,46 @@
+﻿<Window x:Class="NLPTextEditor.EditWordWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" Height="250" Width="500" ResizeMode="NoResize"
+        Title="Word editing" WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Margin="0,0,8,0" HorizontalAlignment="Right" VerticalAlignment="Top">Word:</TextBlock>
+        <TextBox Grid.Row="0" Grid.Column="1" Name="WordTextBox"></TextBox>
+        <TextBlock Grid.Row="1" Grid.Column="0" Margin="0,0,8,0" HorizontalAlignment="Right" VerticalAlignment="Center">Amount:</TextBlock>
+        <TextBox Grid.Row="1" Grid.Column="1" Name="CountTextBox"  PreviewTextInput="NumberValidationTextBox"></TextBox>
+        <TextBlock Grid.Row="2" Grid.Column="0" Margin="0,0,8,0" HorizontalAlignment="Right" VerticalAlignment="Center">Tags:</TextBlock>
+        <TextBox Grid.Row="2" Grid.Column="1" Name="TagsTextBox"></TextBox>
+        <TextBlock Grid.Row="3" Grid.Column="0" Margin="0,0,8,0" HorizontalAlignment="Right" VerticalAlignment="Center">Lemma:</TextBlock>
+        <TextBox Grid.Row="3" Grid.Column="1" Name="LemmaTextBox"></TextBox>
+        <TextBlock Grid.Row="4" Grid.Column="0" Margin="0,0,8,0" HorizontalAlignment="Right" VerticalAlignment="Center">Canonical tag:</TextBlock>
+        <TextBox Grid.Row="4" Grid.Column="1" Name="CanonicalTagTextBox"></TextBox>
+        <TextBlock Grid.Row="5" Grid.Column="0" Margin="0,0,8,0" HorizontalAlignment="Right" VerticalAlignment="Center">Files:</TextBlock>
+        <TextBox Grid.Row="5" Grid.Column="1" Name="FilesTextBox"></TextBox>
+        <Grid Grid.Row="6" Grid.Column="0" ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Grid.Column="0" Click="OK_Click" Margin="3,10,3,3">OK</Button>
+           <Button Grid.Row="0" Grid.Column="1" IsCancel="True" Margin="3,10,3,3">Cancel</Button>
+        </Grid>
+    </Grid>
+</Window>

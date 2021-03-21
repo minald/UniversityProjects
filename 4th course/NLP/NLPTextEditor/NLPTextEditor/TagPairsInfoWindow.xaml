@@ -1,0 +1,30 @@
+﻿<Window x:Class="NLPTextEditor.TagPairsInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" Title="Tags info" Height="600" Width="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <ListView Name="TagsListView" ItemsSource="{Binding Path=TagPairs, Mode=TwoWay}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding FirstTag}">
+                        <GridViewColumnHeader Click="TableHeader_Click" Content="First tag"/>
+                    </GridViewColumn>
+                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding SecondTag}">
+                        <GridViewColumnHeader Click="TableHeader_Click" Content="Second tag"/>
+                    </GridViewColumn>
+                    <GridViewColumn Width="50" DisplayMemberBinding="{Binding Amount}">
+                        <GridViewColumnHeader Click="TableHeader_Click" Content="Amount"/>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>
