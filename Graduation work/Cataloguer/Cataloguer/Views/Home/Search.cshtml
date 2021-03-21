@@ -1,0 +1,99 @@
+﻿@model SearchingResults
+@{
+    ViewBag.Title = ViewBag.SearchingValue;
+}
+
+<h1 class="text-center">@ViewBag.SearchingValue</h1>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="text-center">Artists</h2>
+    </div>
+    <div class="panel-body">
+        @if (Model.Artists.Count == 0)
+        {
+            <h4 class="text-center">There are no artists with this name</h4>
+        }
+        else
+        {
+            <div id="artists" class="flex-container">
+                @foreach (Artist artist in Model.Artists)
+                {
+                    @Html.Partial("_SearchCardArtist", artist)
+                }
+            </div>
+            <button id="add_artists" class="btn btn-primary center-block">More</button>
+        }
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="text-center">Albums</h2>
+    </div>
+    <div class="panel-body">
+        @if (Model.Albums.Count == 0)
+        {
+            <h4 class="text-center">There are no albums with this name</h4>
+        }
+        else
+        {
+            <div id="albums" class="flex-container">
+                @foreach (Album album in Model.Albums)
+                {
+                    @Html.Partial("_SearchCardAlbum", album)
+                }
+            </div>
+            <button id="add_albums" class="btn btn-primary center-block">More</button>
+        }
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="text-center">Tracks</h2>
+    </div>
+    <div class="panel-body">
+        @if (Model.Tracks.Count == 0)
+        {
+            <h4 class="text-center">There are no tracks with this name</h4>
+        }
+        else
+        {
+            <div id="tracks" class="flex-container">
+                @foreach (Track track in Model.Tracks)
+                {
+                    @Html.Partial("_SearchCardTrack", track)
+                }
+            </div>
+            <button id="add_tracks" class="btn btn-primary center-block">More</button>
+        }
+    </div>
+</div>
+
+<script>
+    var artistPage = 2;
+    $('#add_artists').click(function () {
+        LoadNew('/Home/SearchArtists', artistPage, '#artists');
+        artistPage++;
+    });
+    var albumsPage = 2;
+    $('#add_albums').click(function () {
+         LoadNew('/Home/SearchAlbums', albumsPage, '#albums');
+         albumsPage++;
+    });
+    var tracksPage = 2;
+    $('#add_tracks').click(function () {
+        LoadNew('/Home/SearchTracks', tracksPage, '#tracks');
+        tracksPage++;
+    });
+    function LoadNew(url, page, blockId) {
+        $.ajax({
+            url: url,
+            data: {
+                value: '@ViewBag.SearchingValue',
+                page: page
+            },
+            success: function (data) {
+                $(blockId).append(data);
+            }
+        });
+    };
+</script>

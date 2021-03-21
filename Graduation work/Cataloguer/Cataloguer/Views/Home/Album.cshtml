@@ -1,0 +1,48 @@
+﻿@model Album
+@{
+    ViewBag.Title = Model.Name;
+}
+
+<div class="row">
+    <div class="col-sm-3">
+        <img class="img-thumbnail" src="@Model.PictureLink" style="width: 100%;" />
+    </div>
+    <div class="col-sm-9">
+        <h1 class="text-center">@Model.Name</h1>
+        @Html.Partial("_TagList", Model.Tags)
+        <h4>Artist : <a asp-controller="Home" asp-action="Artist" 
+                        asp-route-name="@Model.Artist.Name">@Model.Artist.Name</a></h4>
+        <h4>Scrobbles : @Model.Scrobbles</h4>
+        <h4>Listeners : @Model.Listeners</h4>
+    </div>
+</div>
+@if(Model.Tracks.Count == 0)
+{
+    <h3 class="text-center">There are no tracks in this album</h3>
+}
+else
+{
+    <h2 class="text-center">Tracklist</h2>
+    <table class="table table-hover table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Track track in Model.Tracks)
+            {
+                <tr>
+                    <td>@track.Rank</td>
+                    <td>
+                        <a asp-controller="Home" asp-action="Track" asp-route-trackName="@track.Name" 
+                           asp-route-artistName="@Model.Artist.Name">@track.Name</a>
+                    </td>
+                    <td>@track.Duration</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,39 @@
+﻿@model Artist
+@{
+    ViewBag.Title = Model.Name;
+}
+
+<h1 class="text-center">
+    <img class="img-thumbnail" src="@Model.PictureLink" />    <a asp-controller="Home"
+        asp-action="Artist" asp-route-name="@Model.Name">@Model.Name</a>
+</h1>
+<h2 class="text-center">Top tracks of all time</h2>
+<div id="results" class="flex-container">
+    @Html.Partial("_Tracks", Model.Tracks)
+</div>
+<img id="loading" class="center-block" src="~/images/loading.gif" />
+<script>
+    $(this).on('scroll', scrolling);
+    var page = 2;
+    function scrolling() {
+        if ($(this).scrollTop() >= $('.flex-container').height() - $(this).height() - 100) {
+            $(this).unbind('scroll');
+            $.ajax({
+                beforeSend: function () {
+                    $('#loading').css('display', 'block');
+                },
+                url: '/Home/ArtistTracks',
+                data: {
+                    name: '@Model.Name',
+                    page: page
+                },
+                success: function (data) {
+                    $('#loading').css('display', 'none');
+                    $('#results').append(data);
+                    $(window).on('scroll', scrolling);
+                    page++;
+                }
+            });
+        }
+    }
+</script>
